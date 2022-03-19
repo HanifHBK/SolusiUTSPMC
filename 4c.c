@@ -117,11 +117,12 @@ void rewrite(char namafile[MAXLEN], dp* data, int count, int del){
     }
 }
 
-void appendfile(char namafile[MAXLEN], dp* data2, int count2){
+void appendfile(char namafile[MAXLEN], dp* data2, int count2, int count){
     FILE* dpfile = fopen(namafile, "a+");
     char string[MAXLEN];
     int i;
-    for(i = 0; i < count2; i++){
+    for(i = 1; i < count2; i++){
+        (data2 + i)->urutan = count+(i-1);
         dptostring(data2, i, string, -1);
         fprintf(dpfile, "%s", string);
     }
@@ -249,11 +250,13 @@ int main(){
         }
     } else if(choice ==2){
         char namafile2[MAXLEN];
+        printf("Masukkan nama file yang akan digabung dengan file sebelumnya: ");
+        scanf(" %s", &namafile2);
         dp* data2;
         data2 = (dp*) malloc(sizeof(dp));
         int count2;
         data2 = readfile(namafile2, data2, &count2);
-        appendfile(namafile, data2, count2);
+        appendfile(namafile, data2, count2, count);
     } else if(choice == 3){
         printf("Fitur mencari data penduduk:\n1. Berdasarkan NIK\n2. Berdasarkan Nama\n3. Berdasarkan Umur\n");
         int abc;
